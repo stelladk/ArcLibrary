@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ArcLayout">
+        <attr name="TopLeftArc" format="enum">
+            <enum name="outer" value="1"/>
+            <enum name="none" value="0"/>
+            <enum name="inner" value="-1"/>
+        </attr>
+        <attr name="TopRightArc" format="enum">
+            <enum name="outer" value="1"/>
+            <enum name="none" value="0"/>
+            <enum name="inner" value="-1"/>
+        </attr>
+        <attr name="BottomLeftArc" format="enum">
+            <enum name="outer" value="1"/>
+            <enum name="none" value="0"/>
+            <enum name="inner" value="-1"/>
+        </attr>
+        <attr name="BottomRightArc" format="enum">
+            <enum name="outer" value="1"/>
+            <enum name="none" value="0"/>
+            <enum name="inner" value="-1"/>
+        </attr>
+        <attr name="outerAxis" format="enum">
+            <enum name="x_axis" value="0"/>
+            <enum name="y_axis" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>
