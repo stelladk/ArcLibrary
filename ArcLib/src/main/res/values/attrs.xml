@@ -21,7 +21,19 @@
             <enum name="none" value="0"/>
             <enum name="inner" value="-1"/>
         </attr>
-        <attr name="outerAxis" format="enum">
+        <attr name="TopLeftOuterAxis" format="enum">
+            <enum name="x_axis" value="0"/>
+            <enum name="y_axis" value="1"/>
+        </attr>
+        <attr name="TopRightOuterAxis" format="enum">
+            <enum name="x_axis" value="0"/>
+            <enum name="y_axis" value="1"/>
+        </attr>
+        <attr name="BottomLeftOuterAxis" format="enum">
+            <enum name="x_axis" value="0"/>
+            <enum name="y_axis" value="1"/>
+        </attr>
+        <attr name="BottomRightOuterAxis" format="enum">
             <enum name="x_axis" value="0"/>
             <enum name="y_axis" value="1"/>
         </attr>

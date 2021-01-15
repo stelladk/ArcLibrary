@@ -6,17 +6,21 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 class ArcShape extends Shape {
     private final static String TAG = "ArcShape";
+    protected final static int OUTER = 1;
+    protected final static int NONE = 0;
+    protected final static int INNER = -1;
 
-    private final static int OUTER = 1;
-    private final static int NONE = 0;
-    private final static int INNER = -1;
+    protected final static int X_AXIS = 0;
+    protected final static int Y_AXIS = 1;
 
     private int topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
+    private int topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
 
     private int left, top, right, bottom;
     private int width, height;
@@ -27,6 +31,21 @@ class ArcShape extends Shape {
         this.topRightArc = topRightArc;
         this.bottomLeftArc = bottomLeftArc;
         this.bottomRightArc = bottomRightArc;
+        this.topLeftOuterAxis = X_AXIS;
+        this.topRightOuterAxis = Y_AXIS;
+        this.bottomLeftOuterAxis = Y_AXIS;
+        this.bottomRightOuterAxis = X_AXIS;
+    }
+
+    public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc, int topLeftOuterAxis, int topRightOuterAxis, int bottomLeftOuterAxis, int bottomRightOuterAxis) {
+        this.topLeftArc = topLeftArc;
+        this.topRightArc = topRightArc;
+        this.bottomLeftArc = bottomLeftArc;
+        this.bottomRightArc = bottomRightArc;
+        this.topLeftOuterAxis = topLeftOuterAxis;
+        this.topRightOuterAxis = topRightOuterAxis;
+        this.bottomLeftOuterAxis = bottomLeftOuterAxis;
+        this.bottomRightOuterAxis = bottomRightOuterAxis;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -34,6 +53,11 @@ class ArcShape extends Shape {
     public void draw(Canvas canvas, Paint paint) {
         //Fix sizes
         factorizeSize(canvas);
+
+        Log.d(TAG, "draw: topLeftOuterAxis " + topLeftOuterAxis);
+        Log.d(TAG, "draw: topRightOuterAxis " + topRightOuterAxis);
+        Log.d(TAG, "draw: bottomLeftOuterAxis " + bottomLeftOuterAxis);
+        Log.d(TAG, "draw: bottomRightOuterAxis " + bottomRightOuterAxis);
 
         Path path = new Path();
         path.setFillType(Path.FillType.EVEN_ODD);
@@ -48,8 +72,13 @@ class ArcShape extends Shape {
         }else if(topLeftArc == INNER){
             path.arcTo(new RectF(left, top, xCenter, yCenter), -90, -90);
         }else if(topLeftArc == OUTER){
-            path.lineTo(left-width/2, top);
-            path.arcTo(new RectF(left-width/2, top, left, yCenter), -90, 90);
+            if(topLeftOuterAxis == X_AXIS){
+                path.lineTo(left-width/2, top);
+                path.arcTo(new RectF(left-width/2, top, left, yCenter), -90, 90);
+            }else if(topLeftOuterAxis == Y_AXIS){
+                path.arcTo(new RectF(left, top-height/2, xCenter, top), 90, 90);
+                path.lineTo(left, yCenter);
+            }
         } //end at (left, yCenter)
 
         //Bottom Left Corner
@@ -59,8 +88,13 @@ class ArcShape extends Shape {
         }else if(bottomLeftArc == INNER){
             path.arcTo(new RectF(left, yCenter, xCenter, bottom), 180, -90);
         }else if(bottomLeftArc == OUTER){
-            path.lineTo(left, bottom+height/2);
-            path.arcTo(new RectF(left, bottom, xCenter, bottom+height/2), 180, 90);
+            if(bottomLeftOuterAxis == Y_AXIS){
+                path.lineTo(left, bottom+height/2);
+                path.arcTo(new RectF(left, bottom, xCenter, bottom+height/2), 180, 90);
+            }else if(bottomLeftOuterAxis == X_AXIS){
+                path.arcTo(new RectF(left-width/2, yCenter, left, bottom), 0, 90);
+                path.lineTo(xCenter, bottom);
+            }
         }//end at (xCenter, bottom)
 
         //Bottom Right Corner
@@ -70,8 +104,13 @@ class ArcShape extends Shape {
         }else if(bottomRightArc == INNER){
             path.arcTo(new RectF(xCenter, yCenter, right, bottom), 90, -90);
         }else if(bottomRightArc == OUTER){
-            path.lineTo(right+width/2, bottom);
-            path.arcTo(new RectF(right, yCenter, right+width/2, bottom), 90, 90);
+            if(bottomRightOuterAxis == X_AXIS){
+                path.lineTo(right+width/2, bottom);
+                path.arcTo(new RectF(right, yCenter, right+width/2, bottom), 90, 90);
+            }else if(bottomRightOuterAxis == Y_AXIS){
+                path.arcTo(new RectF(xCenter, bottom, right, bottom+height/2), -90, 90);
+                path.lineTo(right, yCenter);
+            }
         }//end at (right, yCenter)
 
         //Top Right Corner
@@ -81,8 +120,13 @@ class ArcShape extends Shape {
         }else if(topRightArc == INNER){
             path.arcTo(new RectF(xCenter, top, right, yCenter), 0, -90);
         }else if(topRightArc == OUTER){
-            path.lineTo(right, top-height/2);
-            path.arcTo(new RectF(xCenter, top-height/2, right, top), 0, 90);
+            if(topRightOuterAxis == Y_AXIS){
+                path.lineTo(right, top-height/2);
+                path.arcTo(new RectF(xCenter, top-height/2, right, top), 0, 90);
+            }else if(topRightOuterAxis == X_AXIS){
+                path.arcTo(new RectF(right, top, right+width/2, yCenter), 180, 90);
+                path.lineTo(xCenter, top);
+            }
         }//end at (xCenter, top)
 
         path.close();
@@ -94,17 +138,17 @@ class ArcShape extends Shape {
         int viewWidth = canvas.getWidth();
         int viewHeight = canvas.getHeight();
 
-        int side = (Math.min(viewWidth, viewHeight)) * 2/4;
+        int side = (Math.max(viewWidth, viewHeight)) * 2/4;
 
         left = viewWidth/2 - side/2;
         top = viewHeight/2 - side/2;
         right = viewWidth/2 + side/2;
         bottom = viewHeight/2 + side/2;
 
-        if(topLeftArc != OUTER) left = 0;
-        if(topRightArc != OUTER) top = 0;
-        if(bottomLeftArc != OUTER) bottom = viewHeight;
-        if(bottomRightArc != OUTER) right = viewWidth;
+        if((topLeftArc != OUTER || topLeftOuterAxis != X_AXIS) && (bottomLeftArc != OUTER || bottomLeftOuterAxis != X_AXIS)){ left = 0;}
+        if((topRightArc != OUTER || topRightOuterAxis != Y_AXIS) && (topLeftArc != OUTER || topLeftOuterAxis != Y_AXIS)) top = 0;
+        if((bottomLeftArc != OUTER || bottomLeftOuterAxis != Y_AXIS) && (bottomRightArc != OUTER || bottomRightOuterAxis != Y_AXIS)) bottom = viewHeight;
+        if((bottomRightArc != OUTER || bottomRightOuterAxis != X_AXIS) && (topRightArc != OUTER || topRightOuterAxis != X_AXIS)) right = viewWidth;
 
         width = right - left;
         height = bottom - top;

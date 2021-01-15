@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ class ArcLayout extends FrameLayout {
     private Paint paint, maskPaint;
 
     private int topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
+    private int topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
 
     public ArcLayout(@NonNull Context context) {
         super(context);
@@ -42,13 +44,22 @@ class ArcLayout extends FrameLayout {
     private void init(Context context, AttributeSet attrs, int defStyleAttr){
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ArcLayout, defStyleAttr, 0);
         try{
-            this.topLeftArc = a.getInteger(R.styleable.ArcLayout_TopLeftArc, 0);
-            this.topRightArc = a.getInteger(R.styleable.ArcLayout_TopRightArc, 0);
-            this.bottomLeftArc = a.getInteger(R.styleable.ArcLayout_BottomLeftArc, 0);
-            this.bottomRightArc = a.getInteger(R.styleable.ArcLayout_BottomRightArc, 0);
+            this.topLeftArc = a.getInteger(R.styleable.ArcLayout_TopLeftArc, ArcShape.NONE);
+            this.topRightArc = a.getInteger(R.styleable.ArcLayout_TopRightArc, ArcShape.NONE);
+            this.bottomLeftArc = a.getInteger(R.styleable.ArcLayout_BottomLeftArc, ArcShape.NONE);
+            this.bottomRightArc = a.getInteger(R.styleable.ArcLayout_BottomRightArc, ArcShape.NONE);
+
+            this.topLeftOuterAxis = a.getInteger(R.styleable.ArcLayout_TopLeftOuterAxis, ArcShape.X_AXIS);
+            this.topRightOuterAxis = a.getInteger(R.styleable.ArcLayout_TopRightOuterAxis, ArcShape.Y_AXIS);
+            this.bottomLeftOuterAxis = a.getInteger(R.styleable.ArcLayout_BottomLeftOuterAxis, ArcShape.Y_AXIS);
+            this.bottomRightOuterAxis = a.getInteger(R.styleable.ArcLayout_BottomRightOuterAxis, ArcShape.X_AXIS);
         }finally {
             a.recycle();
         }
+        Log.d(TAG, "init: topLeftOuterAxis " + topLeftOuterAxis);
+        Log.d(TAG, "init: topRightOuterAxis " + topRightOuterAxis);
+        Log.d(TAG, "init: bottomLeftOuterAxis " + bottomLeftOuterAxis);
+        Log.d(TAG, "init: bottomRightOuterAxis " + bottomRightOuterAxis);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
@@ -89,7 +100,8 @@ class ArcLayout extends FrameLayout {
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
-        ArcShape shape = new ArcShape(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc);
+        ArcShape shape = new ArcShape(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
+                topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis);
         shape.draw(canvas, paint);
 
         return mask;
