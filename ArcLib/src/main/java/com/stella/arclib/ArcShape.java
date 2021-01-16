@@ -138,12 +138,10 @@ class ArcShape extends Shape {
         int viewWidth = canvas.getWidth();
         int viewHeight = canvas.getHeight();
 
-        int side = (Math.max(viewWidth, viewHeight)) * 2/4;
-
-        left = viewWidth/2 - side/2;
-        top = viewHeight/2 - side/2;
-        right = viewWidth/2 + side/2;
-        bottom = viewHeight/2 + side/2;
+        left = viewWidth/4;
+        top = viewHeight/4;
+        right = viewWidth * 3/4;
+        bottom = viewHeight * 3/4;
 
         if((topLeftArc != OUTER || topLeftOuterAxis != X_AXIS) && (bottomLeftArc != OUTER || bottomLeftOuterAxis != X_AXIS)){ left = 0;}
         if((topRightArc != OUTER || topRightOuterAxis != Y_AXIS) && (topLeftArc != OUTER || topLeftOuterAxis != Y_AXIS)) top = 0;

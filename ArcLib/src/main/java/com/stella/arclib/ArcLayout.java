@@ -20,6 +20,8 @@ import androidx.annotation.RequiresApi;
 class ArcLayout extends FrameLayout {
     private final static String TAG = "ArcLayout";
 
+    private int layoutWidth, layoutHeight;
+
     private Bitmap maskBitmap;
     private Paint paint, maskPaint;
 
@@ -69,16 +71,28 @@ class ArcLayout extends FrameLayout {
         setWillNotDraw(false);
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+//        super.onSizeChanged(w, h, oldw, oldh);
+
+        int xpad = getPaddingLeft() + getPaddingRight();
+        int ypad = getPaddingTop() + getPaddingBottom();
+        layoutWidth = w - xpad;
+        layoutHeight = h - ypad;
+
+        super.onSizeChanged(layoutWidth, layoutHeight, oldw, oldh);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void draw(Canvas canvas){
-        Bitmap offscreenBitmap = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap offscreenBitmap = Bitmap.createBitmap(layoutWidth, layoutHeight, Bitmap.Config.ARGB_8888);
         Canvas offscreenCanvas = new Canvas(offscreenBitmap);
 
         super.draw(offscreenCanvas);
 
         if(maskBitmap == null){
-            maskBitmap = createMask(canvas.getWidth(), canvas.getHeight());
+            maskBitmap = createMask(layoutWidth, layoutHeight);
         }
 
         offscreenCanvas.drawBitmap(maskBitmap, 0f, 0f, maskPaint);

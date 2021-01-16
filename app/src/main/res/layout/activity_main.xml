@@ -14,7 +14,8 @@
         android:background="@drawable/pattern"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone">
     </FrameLayout>
 
 <!--    <FrameLayout-->
@@ -45,7 +46,7 @@
     <com.stella.arclib.ArcLayout
         android:id="@+id/centerView"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="match_parent"
         app:TopLeftArc="outer"
         app:TopLeftOuterAxis="y_axis"
         app:TopRightArc="outer"
@@ -64,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@android:color/white"
+            android:src="@drawable/pattern"
             android:contentDescription="@string/circled_image" />
     </com.stella.arclib.ArcLayout>
 
