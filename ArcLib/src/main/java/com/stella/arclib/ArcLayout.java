@@ -27,6 +27,7 @@ class ArcLayout extends FrameLayout {
 
     private int topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
     private int topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
+    private float topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius;
 
     public ArcLayout(@NonNull Context context) {
         super(context);
@@ -55,6 +56,11 @@ class ArcLayout extends FrameLayout {
             this.topRightOuterAxis = a.getInteger(R.styleable.ArcLayout_TopRightOuterAxis, ArcShape.Y_AXIS);
             this.bottomLeftOuterAxis = a.getInteger(R.styleable.ArcLayout_BottomLeftOuterAxis, ArcShape.Y_AXIS);
             this.bottomRightOuterAxis = a.getInteger(R.styleable.ArcLayout_BottomRightOuterAxis, ArcShape.X_AXIS);
+
+            this.topLeftRadius = a.getDimension(R.styleable.ArcLayout_TopLeftRadius, -1);
+            this.topRightRadius = a.getDimension(R.styleable.ArcLayout_TopRightRadius, -1);
+            this.bottomLeftRadius = a.getDimension(R.styleable.ArcLayout_BottomLeftRadius, -1);
+            this.bottomRightRadius = a.getDimension(R.styleable.ArcLayout_BottomRightRadius, -1);
         }finally {
             a.recycle();
         }
@@ -115,7 +121,8 @@ class ArcLayout extends FrameLayout {
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
         ArcShape shape = new ArcShape(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
-                topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis);
+                topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis,
+                topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius);
         shape.draw(canvas, paint);
 
         return mask;

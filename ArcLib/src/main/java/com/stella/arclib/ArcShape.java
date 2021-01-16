@@ -21,10 +21,12 @@ class ArcShape extends Shape {
 
     private int topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
     private int topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
+    private float topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius;
 
     private int left, top, right, bottom;
     private int width, height;
     private int xCenter, yCenter;
+    private int xRadius, yRadius;
 
     public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc) {
         this.topLeftArc = topLeftArc;
@@ -35,6 +37,7 @@ class ArcShape extends Shape {
         this.topRightOuterAxis = Y_AXIS;
         this.bottomLeftOuterAxis = Y_AXIS;
         this.bottomRightOuterAxis = X_AXIS;
+        this.topLeftRadius=this.topRightRadius=this.bottomLeftRadius=this.bottomRightRadius=-1;
     }
 
     public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc, int topLeftOuterAxis, int topRightOuterAxis, int bottomLeftOuterAxis, int bottomRightOuterAxis) {
@@ -46,6 +49,22 @@ class ArcShape extends Shape {
         this.topRightOuterAxis = topRightOuterAxis;
         this.bottomLeftOuterAxis = bottomLeftOuterAxis;
         this.bottomRightOuterAxis = bottomRightOuterAxis;
+        this.topLeftRadius=this.topRightRadius=this.bottomLeftRadius=this.bottomRightRadius=-1;
+    }
+
+    public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc, int topLeftOuterAxis, int topRightOuterAxis, int bottomLeftOuterAxis, int bottomRightOuterAxis, float topLeftRadius, float topRightRadius, float bottomLeftRadius, float bottomRightRadius) {
+        this.topLeftArc = topLeftArc;
+        this.topRightArc = topRightArc;
+        this.bottomLeftArc = bottomLeftArc;
+        this.bottomRightArc = bottomRightArc;
+        this.topLeftOuterAxis = topLeftOuterAxis;
+        this.topRightOuterAxis = topRightOuterAxis;
+        this.bottomLeftOuterAxis = bottomLeftOuterAxis;
+        this.bottomRightOuterAxis = bottomRightOuterAxis;
+        this.topLeftRadius = topLeftRadius;
+        this.topRightRadius = topRightRadius;
+        this.bottomLeftRadius = bottomLeftRadius;
+        this.bottomRightRadius = bottomRightRadius;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -70,13 +89,13 @@ class ArcShape extends Shape {
             path.lineTo(left, top);
             path.lineTo(left, yCenter);
         }else if(topLeftArc == INNER){
-            path.arcTo(new RectF(left, top, xCenter, yCenter), -90, -90);
+            path.arcTo(new RectF(left, top, left+xRadius*2, top+yRadius*2), -90, -90);
         }else if(topLeftArc == OUTER){
             if(topLeftOuterAxis == X_AXIS){
-                path.lineTo(left-width/2, top);
-                path.arcTo(new RectF(left-width/2, top, left, yCenter), -90, 90);
+                path.lineTo(left-xRadius*2, top);
+                path.arcTo(new RectF(left-xRadius*2, top, left, top+xRadius*2), -90, 90);
             }else if(topLeftOuterAxis == Y_AXIS){
-                path.arcTo(new RectF(left, top-height/2, xCenter, top), 90, 90);
+                path.arcTo(new RectF(left, top-yRadius*2, left+yRadius*2, top), 90, 90);
                 path.lineTo(left, yCenter);
             }
         } //end at (left, yCenter)
@@ -86,13 +105,13 @@ class ArcShape extends Shape {
             path.lineTo(left, bottom);
             path.lineTo(xCenter, bottom);
         }else if(bottomLeftArc == INNER){
-            path.arcTo(new RectF(left, yCenter, xCenter, bottom), 180, -90);
+            path.arcTo(new RectF(left, bottom-yRadius*2, left+xRadius*2, bottom), 180, -90);
         }else if(bottomLeftArc == OUTER){
             if(bottomLeftOuterAxis == Y_AXIS){
-                path.lineTo(left, bottom+height/2);
-                path.arcTo(new RectF(left, bottom, xCenter, bottom+height/2), 180, 90);
+                path.lineTo(left, bottom+yRadius*2);
+                path.arcTo(new RectF(left, bottom, left+yRadius*2, bottom+yRadius*2), 180, 90);
             }else if(bottomLeftOuterAxis == X_AXIS){
-                path.arcTo(new RectF(left-width/2, yCenter, left, bottom), 0, 90);
+                path.arcTo(new RectF(left-xRadius*2, bottom-xRadius*2, left, bottom), 0, 90);
                 path.lineTo(xCenter, bottom);
             }
         }//end at (xCenter, bottom)
@@ -102,13 +121,13 @@ class ArcShape extends Shape {
             path.lineTo(right, bottom);
             path.lineTo(right, yCenter);
         }else if(bottomRightArc == INNER){
-            path.arcTo(new RectF(xCenter, yCenter, right, bottom), 90, -90);
+            path.arcTo(new RectF(right-xRadius*2, bottom-yRadius*2, right, bottom), 90, -90);
         }else if(bottomRightArc == OUTER){
             if(bottomRightOuterAxis == X_AXIS){
-                path.lineTo(right+width/2, bottom);
-                path.arcTo(new RectF(right, yCenter, right+width/2, bottom), 90, 90);
+                path.lineTo(right+xRadius*2, bottom);
+                path.arcTo(new RectF(right, bottom-xRadius*2, right+xRadius*2, bottom), 90, 90);
             }else if(bottomRightOuterAxis == Y_AXIS){
-                path.arcTo(new RectF(xCenter, bottom, right, bottom+height/2), -90, 90);
+                path.arcTo(new RectF(right-yRadius*2, bottom, right, bottom+yRadius*2), -90, 90);
                 path.lineTo(right, yCenter);
             }
         }//end at (right, yCenter)
@@ -118,13 +137,13 @@ class ArcShape extends Shape {
             path.lineTo(right, top);
             path.lineTo(xCenter, top);
         }else if(topRightArc == INNER){
-            path.arcTo(new RectF(xCenter, top, right, yCenter), 0, -90);
+            path.arcTo(new RectF(right-xRadius*2, top, right, top+yRadius*2), 0, -90);
         }else if(topRightArc == OUTER){
             if(topRightOuterAxis == Y_AXIS){
-                path.lineTo(right, top-height/2);
-                path.arcTo(new RectF(xCenter, top-height/2, right, top), 0, 90);
+                path.lineTo(right, top-yRadius*2);
+                path.arcTo(new RectF(right-yRadius*2, top-yRadius*2, right, top), 0, 90);
             }else if(topRightOuterAxis == X_AXIS){
-                path.arcTo(new RectF(right, top, right+width/2, yCenter), 180, 90);
+                path.arcTo(new RectF(right, top, right+xRadius*2, top+xRadius*2), 180, 90);
                 path.lineTo(xCenter, top);
             }
         }//end at (xCenter, top)
@@ -153,6 +172,11 @@ class ArcShape extends Shape {
 
         xCenter = left+width/2;
         yCenter = top+height/2;
+
+        xRadius = width*3/8;
+        yRadius = height*3/8;
+
+//        if(topLeftRadius == -1) topLeftRadius =
     }
 
 }
