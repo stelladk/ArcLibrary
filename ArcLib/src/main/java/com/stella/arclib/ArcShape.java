@@ -26,7 +26,9 @@ class ArcShape extends Shape {
     private int left, top, right, bottom;
     private int width, height;
     private int xCenter, yCenter;
-    private int xRadius, yRadius;
+    private float xRadius, yRadius;
+    private float topLeftRadiusX, topRightRadiusX, bottomLeftRadiusX, bottomRightRadiusX;
+    private float topLeftRadiusY, topRightRadiusY, bottomLeftRadiusY, bottomRightRadiusY;
 
     public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc) {
         this.topLeftArc = topLeftArc;
@@ -89,13 +91,13 @@ class ArcShape extends Shape {
             path.lineTo(left, top);
             path.lineTo(left, yCenter);
         }else if(topLeftArc == INNER){
-            path.arcTo(new RectF(left, top, left+xRadius*2, top+yRadius*2), -90, -90);
+            path.arcTo(new RectF(left, top, left+topLeftRadiusX*2, top+topLeftRadiusY*2), -90, -90);
         }else if(topLeftArc == OUTER){
             if(topLeftOuterAxis == X_AXIS){
-                path.lineTo(left-xRadius*2, top);
-                path.arcTo(new RectF(left-xRadius*2, top, left, top+xRadius*2), -90, 90);
+                path.lineTo(left-topLeftRadiusX*2, top);
+                path.arcTo(new RectF(left-topLeftRadiusX*2, top, left, top+topLeftRadiusY*2), -90, 90);
             }else if(topLeftOuterAxis == Y_AXIS){
-                path.arcTo(new RectF(left, top-yRadius*2, left+yRadius*2, top), 90, 90);
+                path.arcTo(new RectF(left, top-topLeftRadiusY*2, left+topLeftRadiusX*2, top), 90, 90);
                 path.lineTo(left, yCenter);
             }
         } //end at (left, yCenter)
@@ -105,13 +107,13 @@ class ArcShape extends Shape {
             path.lineTo(left, bottom);
             path.lineTo(xCenter, bottom);
         }else if(bottomLeftArc == INNER){
-            path.arcTo(new RectF(left, bottom-yRadius*2, left+xRadius*2, bottom), 180, -90);
+            path.arcTo(new RectF(left, bottom-bottomLeftRadiusY*2, left+bottomLeftRadiusX*2, bottom), 180, -90);
         }else if(bottomLeftArc == OUTER){
             if(bottomLeftOuterAxis == Y_AXIS){
-                path.lineTo(left, bottom+yRadius*2);
-                path.arcTo(new RectF(left, bottom, left+yRadius*2, bottom+yRadius*2), 180, 90);
+                path.lineTo(left, bottom+bottomLeftRadiusY*2);
+                path.arcTo(new RectF(left, bottom, left+bottomLeftRadiusX*2, bottom+bottomLeftRadiusY*2), 180, 90);
             }else if(bottomLeftOuterAxis == X_AXIS){
-                path.arcTo(new RectF(left-xRadius*2, bottom-xRadius*2, left, bottom), 0, 90);
+                path.arcTo(new RectF(left-bottomLeftRadiusX*2, bottom-bottomLeftRadiusY*2, left, bottom), 0, 90);
                 path.lineTo(xCenter, bottom);
             }
         }//end at (xCenter, bottom)
@@ -121,13 +123,13 @@ class ArcShape extends Shape {
             path.lineTo(right, bottom);
             path.lineTo(right, yCenter);
         }else if(bottomRightArc == INNER){
-            path.arcTo(new RectF(right-xRadius*2, bottom-yRadius*2, right, bottom), 90, -90);
+            path.arcTo(new RectF(right-bottomRightRadiusX*2, bottom-bottomRightRadiusY*2, right, bottom), 90, -90);
         }else if(bottomRightArc == OUTER){
             if(bottomRightOuterAxis == X_AXIS){
-                path.lineTo(right+xRadius*2, bottom);
-                path.arcTo(new RectF(right, bottom-xRadius*2, right+xRadius*2, bottom), 90, 90);
+                path.lineTo(right+bottomRightRadiusX*2, bottom);
+                path.arcTo(new RectF(right, bottom-bottomRightRadiusY*2, right+bottomRightRadiusX*2, bottom), 90, 90);
             }else if(bottomRightOuterAxis == Y_AXIS){
-                path.arcTo(new RectF(right-yRadius*2, bottom, right, bottom+yRadius*2), -90, 90);
+                path.arcTo(new RectF(right-bottomRightRadiusX*2, bottom, right, bottom+bottomRightRadiusY*2), -90, 90);
                 path.lineTo(right, yCenter);
             }
         }//end at (right, yCenter)
@@ -137,13 +139,13 @@ class ArcShape extends Shape {
             path.lineTo(right, top);
             path.lineTo(xCenter, top);
         }else if(topRightArc == INNER){
-            path.arcTo(new RectF(right-xRadius*2, top, right, top+yRadius*2), 0, -90);
+            path.arcTo(new RectF(right-topRightRadiusX*2, top, right, top+topRightRadiusY*2), 0, -90);
         }else if(topRightArc == OUTER){
             if(topRightOuterAxis == Y_AXIS){
-                path.lineTo(right, top-yRadius*2);
-                path.arcTo(new RectF(right-yRadius*2, top-yRadius*2, right, top), 0, 90);
+                path.lineTo(right, top-topRightRadiusY*2);
+                path.arcTo(new RectF(right-topRightRadiusX*2, top-topRightRadiusY*2, right, top), 0, 90);
             }else if(topRightOuterAxis == X_AXIS){
-                path.arcTo(new RectF(right, top, right+xRadius*2, top+xRadius*2), 180, 90);
+                path.arcTo(new RectF(right, top, right+topRightRadiusX*2, top+topRightRadiusY*2), 180, 90);
                 path.lineTo(xCenter, top);
             }
         }//end at (xCenter, top)
@@ -173,10 +175,30 @@ class ArcShape extends Shape {
         xCenter = left+width/2;
         yCenter = top+height/2;
 
-        xRadius = width*3/8;
-        yRadius = height*3/8;
+        xRadius = width *3/8F;
+        yRadius = height*3/8F;
 
-//        if(topLeftRadius == -1) topLeftRadius =
+        topLeftRadiusX=topLeftRadiusY = topLeftRadius;
+        topRightRadiusX=topRightRadiusY = topRightRadius;
+        bottomLeftRadiusX=bottomLeftRadiusY = bottomLeftRadius;
+        bottomRightRadiusX=bottomRightRadiusY = bottomRightRadius;
+
+        if(topLeftRadius == -1) {
+            topLeftRadiusX = xRadius;
+            topLeftRadiusY = yRadius;
+        }
+        if(topRightRadius == -1) {
+            topRightRadiusX = xRadius;
+            topRightRadiusY = yRadius;
+        }
+        if(bottomLeftRadius == -1){
+            bottomLeftRadiusX = xRadius;
+            bottomLeftRadiusY = yRadius;
+        }
+        if(bottomRightRadius == -1) {
+            bottomRightRadiusX = xRadius;
+            bottomRightRadiusY = yRadius;
+        }
     }
 
 }
