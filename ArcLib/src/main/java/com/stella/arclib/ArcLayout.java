@@ -64,10 +64,6 @@ class ArcLayout extends FrameLayout {
         }finally {
             a.recycle();
         }
-        Log.d(TAG, "init: topLeftOuterAxis " + topLeftOuterAxis);
-        Log.d(TAG, "init: topRightOuterAxis " + topRightOuterAxis);
-        Log.d(TAG, "init: bottomLeftOuterAxis " + bottomLeftOuterAxis);
-        Log.d(TAG, "init: bottomRightOuterAxis " + bottomRightOuterAxis);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 

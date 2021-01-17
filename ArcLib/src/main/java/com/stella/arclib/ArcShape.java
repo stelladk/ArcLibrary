@@ -31,27 +31,14 @@ class ArcShape extends Shape {
     private float topLeftRadiusY, topRightRadiusY, bottomLeftRadiusY, bottomRightRadiusY;
 
     public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc) {
-        this.topLeftArc = topLeftArc;
-        this.topRightArc = topRightArc;
-        this.bottomLeftArc = bottomLeftArc;
-        this.bottomRightArc = bottomRightArc;
-        this.topLeftOuterAxis = X_AXIS;
-        this.topRightOuterAxis = Y_AXIS;
-        this.bottomLeftOuterAxis = Y_AXIS;
-        this.bottomRightOuterAxis = X_AXIS;
-        this.topLeftRadius=this.topRightRadius=this.bottomLeftRadius=this.bottomRightRadius=-1;
+        this(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
+                X_AXIS, Y_AXIS, Y_AXIS, X_AXIS);
     }
 
     public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc, int topLeftOuterAxis, int topRightOuterAxis, int bottomLeftOuterAxis, int bottomRightOuterAxis) {
-        this.topLeftArc = topLeftArc;
-        this.topRightArc = topRightArc;
-        this.bottomLeftArc = bottomLeftArc;
-        this.bottomRightArc = bottomRightArc;
-        this.topLeftOuterAxis = topLeftOuterAxis;
-        this.topRightOuterAxis = topRightOuterAxis;
-        this.bottomLeftOuterAxis = bottomLeftOuterAxis;
-        this.bottomRightOuterAxis = bottomRightOuterAxis;
-        this.topLeftRadius=this.topRightRadius=this.bottomLeftRadius=this.bottomRightRadius=-1;
+        this(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
+                topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis,
+                -1, -1, -1, -1);
     }
 
     public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc, int topLeftOuterAxis, int topRightOuterAxis, int bottomLeftOuterAxis, int bottomRightOuterAxis, float topLeftRadius, float topRightRadius, float bottomLeftRadius, float bottomRightRadius) {
@@ -74,11 +61,6 @@ class ArcShape extends Shape {
     public void draw(Canvas canvas, Paint paint) {
         //Fix sizes
         factorizeSize(canvas);
-
-        Log.d(TAG, "draw: topLeftOuterAxis " + topLeftOuterAxis);
-        Log.d(TAG, "draw: topRightOuterAxis " + topRightOuterAxis);
-        Log.d(TAG, "draw: bottomLeftOuterAxis " + bottomLeftOuterAxis);
-        Log.d(TAG, "draw: bottomRightOuterAxis " + bottomRightOuterAxis);
 
         Path path = new Path();
         path.setFillType(Path.FillType.EVEN_ODD);

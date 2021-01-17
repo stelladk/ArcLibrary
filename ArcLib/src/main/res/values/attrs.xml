@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ArcLayout">
+        <!--        Arc Type-->
         <attr name="TopLeftArc" format="enum">
             <enum name="outer" value="1"/>
             <enum name="none" value="0"/>
@@ -21,6 +22,7 @@
             <enum name="none" value="0"/>
             <enum name="inner" value="-1"/>
         </attr>
+        <!--        Outer Arc Axis-->
         <attr name="TopLeftOuterAxis" format="enum">
             <enum name="x_axis" value="0"/>
             <enum name="y_axis" value="1"/>
@@ -37,6 +39,7 @@
             <enum name="x_axis" value="0"/>
             <enum name="y_axis" value="1"/>
         </attr>
+        <!--        Corner Radius-->
         <attr name="TopLeftRadius" format="dimension"/>
         <attr name="TopRightRadius" format="dimension"/>
         <attr name="BottomLeftRadius" format="dimension"/>
