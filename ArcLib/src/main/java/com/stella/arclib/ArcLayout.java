@@ -25,9 +25,9 @@ class ArcLayout extends FrameLayout {
     private Bitmap maskBitmap;
     private Paint paint, maskPaint;
 
-    private int topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
-    private int topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
-    private float topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius;
+    private int arcType, topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
+    private int outerAxis, topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
+    private float arcRadius, topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius;
 
     public ArcLayout(@NonNull Context context) {
         super(context);
@@ -47,20 +47,25 @@ class ArcLayout extends FrameLayout {
     private void init(Context context, AttributeSet attrs, int defStyleAttr){
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ArcLayout, defStyleAttr, 0);
         try{
-            this.topLeftArc = a.getInteger(R.styleable.ArcLayout_TopLeftArc, ArcShape.NONE);
-            this.topRightArc = a.getInteger(R.styleable.ArcLayout_TopRightArc, ArcShape.NONE);
-            this.bottomLeftArc = a.getInteger(R.styleable.ArcLayout_BottomLeftArc, ArcShape.NONE);
-            this.bottomRightArc = a.getInteger(R.styleable.ArcLayout_BottomRightArc, ArcShape.NONE);
+            //Default Values
+            this.arcType = a.getInteger(R.styleable. ArcLayout_ArcType, ArcShape.NONE);
+            this.outerAxis = a.getInteger(R.styleable.ArcLayout_OuterAxis, ArcShape.Y_AXIS);
+            this.arcRadius = a.getDimension(R.styleable.ArcLayout_ArcRadius, -1);
 
-            this.topLeftOuterAxis = a.getInteger(R.styleable.ArcLayout_TopLeftOuterAxis, ArcShape.X_AXIS);
-            this.topRightOuterAxis = a.getInteger(R.styleable.ArcLayout_TopRightOuterAxis, ArcShape.Y_AXIS);
-            this.bottomLeftOuterAxis = a.getInteger(R.styleable.ArcLayout_BottomLeftOuterAxis, ArcShape.Y_AXIS);
-            this.bottomRightOuterAxis = a.getInteger(R.styleable.ArcLayout_BottomRightOuterAxis, ArcShape.X_AXIS);
+            this.topLeftArc = a.getInteger(R.styleable.ArcLayout_TopLeftArc, arcType);
+            this.topRightArc = a.getInteger(R.styleable.ArcLayout_TopRightArc, arcType);
+            this.bottomLeftArc = a.getInteger(R.styleable.ArcLayout_BottomLeftArc, arcType);
+            this.bottomRightArc = a.getInteger(R.styleable.ArcLayout_BottomRightArc, arcType);
 
-            this.topLeftRadius = a.getDimension(R.styleable.ArcLayout_TopLeftRadius, -1);
-            this.topRightRadius = a.getDimension(R.styleable.ArcLayout_TopRightRadius, -1);
-            this.bottomLeftRadius = a.getDimension(R.styleable.ArcLayout_BottomLeftRadius, -1);
-            this.bottomRightRadius = a.getDimension(R.styleable.ArcLayout_BottomRightRadius, -1);
+            this.topLeftOuterAxis = a.getInteger(R.styleable.ArcLayout_TopLeftOuterAxis, outerAxis);
+            this.topRightOuterAxis = a.getInteger(R.styleable.ArcLayout_TopRightOuterAxis, outerAxis);
+            this.bottomLeftOuterAxis = a.getInteger(R.styleable.ArcLayout_BottomLeftOuterAxis, outerAxis);
+            this.bottomRightOuterAxis = a.getInteger(R.styleable.ArcLayout_BottomRightOuterAxis, outerAxis);
+
+            this.topLeftRadius = a.getDimension(R.styleable.ArcLayout_TopLeftRadius, arcRadius);
+            this.topRightRadius = a.getDimension(R.styleable.ArcLayout_TopRightRadius, arcRadius);
+            this.bottomLeftRadius = a.getDimension(R.styleable.ArcLayout_BottomLeftRadius, arcRadius);
+            this.bottomRightRadius = a.getDimension(R.styleable.ArcLayout_BottomRightRadius, arcRadius);
         }finally {
             a.recycle();
         }
