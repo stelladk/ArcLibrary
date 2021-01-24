@@ -55,4 +55,7 @@
         <attr name="BottomLeftRadius" format="dimension"/>
         <attr name="BottomRightRadius" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="ArcImageView">
+        <attr name="src" format="reference"/>
+    </declare-styleable>
 </resources>
