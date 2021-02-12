@@ -141,15 +141,15 @@ class ArcShape extends Shape {
         int viewWidth = canvas.getWidth();
         int viewHeight = canvas.getHeight();
 
-        left = viewWidth/4;
-        top = viewHeight/4;
-        right = viewWidth * 3/4;
-        bottom = viewHeight * 3/4;
+//        left = viewWidth/4;
+//        top = viewHeight/4;
+//        right = viewWidth * 3/4;
+//        bottom = viewHeight * 3/4;
 
-        if((topLeftArc != OUTER || topLeftOuterAxis != X_AXIS) && (bottomLeftArc != OUTER || bottomLeftOuterAxis != X_AXIS)){ left = 0;}
-        if((topRightArc != OUTER || topRightOuterAxis != Y_AXIS) && (topLeftArc != OUTER || topLeftOuterAxis != Y_AXIS)) top = 0;
-        if((bottomLeftArc != OUTER || bottomLeftOuterAxis != Y_AXIS) && (bottomRightArc != OUTER || bottomRightOuterAxis != Y_AXIS)) bottom = viewHeight;
-        if((bottomRightArc != OUTER || bottomRightOuterAxis != X_AXIS) && (topRightArc != OUTER || topRightOuterAxis != X_AXIS)) right = viewWidth;
+        left = calcMargin(viewWidth, X_AXIS, topLeftArc, topLeftOuterAxis, topLeftRadius, bottomLeftArc, bottomLeftOuterAxis, bottomLeftRadius);
+        top = calcMargin(viewHeight, Y_AXIS, topLeftArc, topLeftOuterAxis, topLeftRadius, topRightArc, topRightOuterAxis, topRightRadius);
+        bottom = viewHeight - calcMargin(viewHeight, Y_AXIS, bottomLeftArc, bottomLeftOuterAxis, bottomLeftRadius, bottomRightArc, bottomRightOuterAxis, bottomRightRadius);
+        right = viewWidth - calcMargin(viewWidth, X_AXIS, topRightArc, topRightOuterAxis, topRightRadius, bottomRightArc, bottomRightOuterAxis, bottomRightRadius);
 
         width = right - left;
         height = bottom - top;
@@ -181,6 +181,20 @@ class ArcShape extends Shape {
             bottomRightRadiusX = xRadius;
             bottomRightRadiusY = yRadius;
         }
+    }
+
+    //TODO CHECK DEFAULT RADIUS
+    private int calcMargin(int dim, int axis, int arc1, int arcAxis1, float arcRadius1, int arc2, int arcAxis2, float arcRadius2){
+        int margin = 0;
+        if((arc1 == OUTER && arcAxis1 == axis) && (arc2 == OUTER && arcAxis2 == axis)){
+            int maximum = (int)Math.max(arcRadius1, arcRadius2);
+            margin = maximum == -1? dim/4 : maximum;
+        }else if(arc1 == OUTER && arcAxis1 == axis){
+            margin = arcRadius1 == -1? dim/4 : (int)arcRadius1;
+        }else if(arc2 == OUTER && arcAxis2 == axis){
+            margin = arcRadius2 == -1? dim/4 : (int)arcRadius2;
+        }
+        return margin;
     }
 
 }
