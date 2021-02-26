@@ -1,4 +1,4 @@
 /build
 
-src/main/java/com/stella/customimageview/MainActivity.java
+src/main/java/com/stelladk/customimageview/MainActivity.java
 src/main/res/layout/activity_main_test.xml

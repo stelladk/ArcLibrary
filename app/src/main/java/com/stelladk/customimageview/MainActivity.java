@@ -1,4 +1,4 @@
-package com.stella.customimageview;
+package com.stelladk.customimageview;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;

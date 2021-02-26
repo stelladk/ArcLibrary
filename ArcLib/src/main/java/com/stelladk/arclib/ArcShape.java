@@ -1,4 +1,4 @@
-package com.stella.arclib;
+package com.stelladk.arclib;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -6,7 +6,6 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 

@@ -1,4 +1,4 @@
-package com.stella.arclib;
+package com.stelladk.arclib;
 
 import android.content.Context;
 import android.graphics.Canvas;

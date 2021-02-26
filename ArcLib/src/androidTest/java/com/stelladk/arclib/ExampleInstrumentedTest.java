@@ -1,4 +1,4 @@
-package com.stella.customimageview;
+package com.stelladk.arclib;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.stella.customimageview", appContext.getPackageName());
+        assertEquals("com.stella.arclib.test", appContext.getPackageName());
     }
 }

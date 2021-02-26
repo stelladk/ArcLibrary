@@ -1,4 +1,4 @@
-package com.stella.customimageview;
+package com.stelladk.arclib;
 
 import org.junit.Test;
 
