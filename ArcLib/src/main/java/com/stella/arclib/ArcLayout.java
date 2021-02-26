@@ -17,7 +17,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-class ArcLayout extends FrameLayout {
+/**
+ * Layout with customisable arc corners
+ *
+ * @see ArcShape
+ *
+ * @attr ref R.styleable#ArcLayout
+ *
+ * @attr ref R.styleable#ArcLayout_ArcType
+ * @attr ref R.styleable#ArcLayout_TopLeftArc
+ * @attr ref R.styleable#ArcLayout_TopRightArc
+ * @attr ref R.styleable#ArcLayout_BottomLeftArc
+ * @attr ref R.styleable#ArcLayout_BottomRightArc
+ * @attr ref R.styleable#ArcLayout_OuterAxis
+ * @attr ref R.styleable#ArcLayout_TopLeftOuterAxis
+ * @attr ref R.styleable#ArcLayout_TopRightOuterAxis
+ * @attr ref R.styleable#ArcLayout_BottomLeftOuterAxis
+ * @attr ref R.styleable#ArcLayout_BottomRightOuterAxis
+ * @attr ref R.styleable#ArcLayout_ArcRadius
+ * @attr ref R.styleable#ArcLayout_TopLeftRadius
+ * @attr ref R.styleable#ArcLayout_TopRightRadius
+ * @attr ref R.styleable#ArcLayout_BottomLeftRadius
+ * @attr ref R.styleable#ArcLayout_BottomRightRadius
+ */
+public class ArcLayout extends FrameLayout {
     private final static String TAG = "ArcLayout";
 
     private int layoutWidth, layoutHeight;
@@ -78,6 +101,9 @@ class ArcLayout extends FrameLayout {
         setWillNotDraw(false);
     }
 
+    /**
+     * Called when the size of this view has changed.
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         maskBitmap = null;
@@ -90,6 +116,10 @@ class ArcLayout extends FrameLayout {
         super.onSizeChanged(layoutWidth, layoutHeight, oldw, oldh);
     }
 
+    /**
+     * Draws ArcLayout on the canvas
+     * @param canvas to draw the layout into
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void draw(Canvas canvas){
