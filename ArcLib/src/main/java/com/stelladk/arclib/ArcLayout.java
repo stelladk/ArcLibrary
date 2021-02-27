@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -101,6 +102,123 @@ public class ArcLayout extends FrameLayout {
     }
 
     /**
+     * Set the top left corner arc type
+     * @param arc value that determines arc type
+     */
+    public void setTopLeftArcType(int arc){
+        if(arc == ArcShape.NONE) this.topLeftArc = arc;
+        if(arc <= ArcShape.INNER) this.topLeftArc = ArcShape.INNER;
+        if(arc >= ArcShape.OUTER) this.topLeftArc = ArcShape.OUTER;
+    }
+
+    /**
+     * Set the top right corner arc type
+     * @param arc value that determines arc type
+     */
+    public void setTopRightArc(int arc){
+        if(arc == ArcShape.NONE) this.topRightArc = arc;
+        if(arc <= ArcShape.INNER) this.topRightArc = ArcShape.INNER;
+        if(arc >= ArcShape.OUTER) this.topRightArc = ArcShape.OUTER;
+    }
+
+    /**
+     * Set the bottom left corner arc type
+     * @param arc value that determines arc type
+     */
+    public void setBottomLeftArc(int arc){
+        if(arc == ArcShape.NONE) this.bottomLeftArc = arc;
+        if(arc <= ArcShape.INNER) this.bottomLeftArc = ArcShape.INNER;
+        if(arc >= ArcShape.OUTER) this.bottomLeftArc = ArcShape.OUTER;
+    }
+
+    /**
+     * Set the bottom right corner arc type
+     * @param arc value that determines arc type
+     */
+    public void setBottomRightArc(int arc){
+        if(arc == ArcShape.NONE) this.bottomRightArc = arc;
+        if(arc <= ArcShape.INNER) this.bottomRightArc = ArcShape.INNER;
+        if(arc >= ArcShape.OUTER) this.bottomRightArc = ArcShape.OUTER;
+    }
+
+    /**
+     * Set the top left axis for outer arcs
+     * @param axis outer arc axis
+     */
+    public void setTopLeftOuterAxis(int axis){
+        if(axis <= ArcShape.X_AXIS) this.topLeftOuterAxis = ArcShape.X_AXIS;
+        if(axis >= ArcShape.Y_AXIS) this.topLeftOuterAxis = ArcShape.Y_AXIS;
+    }
+
+    /**
+     * Set the top right axis for outer arcs
+     * @param axis outer arc axis
+     */
+    public void setTopRightOuterAxis(int axis){
+        if(axis <= ArcShape.X_AXIS) this.topRightOuterAxis = ArcShape.X_AXIS;
+        if(axis >= ArcShape.Y_AXIS) this.topRightOuterAxis = ArcShape.Y_AXIS;
+    }
+
+    /**
+     * Set the bottom left axis for outer arcs
+     * @param axis outer arc axis
+     */
+    public void setBottomLeftOuterAxis(int axis){
+        if(axis <= ArcShape.X_AXIS) this.bottomLeftOuterAxis = ArcShape.X_AXIS;
+        if(axis >= ArcShape.Y_AXIS) this.bottomLeftOuterAxis = ArcShape.Y_AXIS;
+    }
+
+    /**
+     * Set the bottom right axis for outer arcs
+     * @param axis outer arc axis
+     */
+    public void setBottomRightOuterAxis(int axis){
+        if(axis <= ArcShape.X_AXIS) this.bottomRightOuterAxis = ArcShape.X_AXIS;
+        if(axis >= ArcShape.Y_AXIS) this.bottomRightOuterAxis = ArcShape.Y_AXIS;
+    }
+
+    /**
+     * Set the top left arc radius
+     * @param radius arc radius
+     */
+    public void setTopLeftRadius(float radius){
+        this.topLeftRadius = radius;
+    }
+
+    /**
+     * Set the top right arc radius
+     * @param radius arc radius
+     */
+    public void setTopRightRadius(float radius){
+        this.topRightRadius = radius;
+    }
+
+    /**
+     * Set the bottom left arc radius
+     * @param radius arc radius
+     */
+    public void setBottomLeftRadius(float radius){
+        this.bottomLeftRadius = radius;
+    }
+
+    /**
+     * Set the bottom right arc radius
+     * @param radius arc radius
+     */
+    public void setBottomRightRadius(float radius){
+        this.bottomRightRadius = radius;
+    }
+
+    /**
+     * Redraw the ArcLayout
+     * Used to change the arcs in runtime
+     */
+    public void redraw(){
+        maskBitmap = null;
+        this.invalidate();
+    }
+
+    /**
      * Called when the size of this view has changed.
      */
     @Override
@@ -124,7 +242,6 @@ public class ArcLayout extends FrameLayout {
     public void draw(Canvas canvas){
         Bitmap offscreenBitmap = Bitmap.createBitmap(layoutWidth, layoutHeight, Bitmap.Config.ARGB_8888);
         Canvas offscreenCanvas = new Canvas(offscreenBitmap);
-
         super.draw(offscreenCanvas);
 
         if(maskBitmap == null){

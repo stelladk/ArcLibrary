@@ -19,24 +19,24 @@ public class ArcShape extends Shape {
     /**
      * Static variable for outer arcs
      */
-    protected final static int OUTER = 1;
+    public final static int OUTER = 1;
     /**
      * Static variable for no arcs
      */
-    protected final static int NONE = 0;
+    public final static int NONE = 0;
     /**
      * Static variable for inner arcs
      */
-    protected final static int INNER = -1;
+    public final static int INNER = -1;
 
     /**
      * Static variable for x axis
      */
-    protected final static int X_AXIS = 0;
+    public final static int X_AXIS = 0;
     /**
      * Static variable for y axis
      */
-    protected final static int Y_AXIS = 1;
+    public final static int Y_AXIS = 1;
 
     private int topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
     private int topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
