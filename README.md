@@ -1,14 +1,15 @@
 # ArcLibrary
 An android library for Layouts with rounded corners
 
+<p align="center">
 <img src="preview/example_chat.jpg" alt="example_chat" width="200"/>
+</p>
 
----
 
 ## Install
 
 
----
+
 ## How to use
 In your layout declare a namespace for the library
 
@@ -63,7 +64,9 @@ There are all different kind of shapes that you can build.
         arclib:OuterAxis="y_axis"
         arclib:ArcRadius="150dp"/>
 
+<p align="center">
 <img src="preview/wave.jpg" alt="Wave example" width="200">
+</p>
 
 ### Example 2
 
@@ -75,7 +78,8 @@ There are all different kind of shapes that you can build.
         arclib:BottomRightArc="inner"
         arclib:ArcRadius="150dp"/>
 
-<img src="preview/header.jpg" alt="Header example" width="200">
+<p align="center">
+<img src="preview/header.jpg" alt="Header example" width="200"></p>
 
 ### Example 3
 
@@ -113,7 +117,8 @@ There are all different kind of shapes that you can build.
         arclib:BottomLeftArc="outer"
         arclib:BottomLeftRadius="90dp"/>
 
-<img src="preview/speech_bubbles.jpg" alt="Speech bubbles" width="200">
+<p align="center">
+<img src="preview/speech_bubbles.jpg" alt="Speech bubbles" width="200"></p>
 
 ---
 
