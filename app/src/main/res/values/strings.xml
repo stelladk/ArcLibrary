@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CustomImageView</string>
     <string name="circled_image">Circled Image</string>
+    <string name="inner">Inner</string>
+    <string name="outer">Outer</string>
+    <string name="x_axis">X Axis</string>
 </resources>
