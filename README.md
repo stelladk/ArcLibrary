@@ -74,6 +74,7 @@ There are all different kind of shapes that you can build.
     <com.stelladk.arclib.ArcLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/pattern"
 
         app:ArcType="inner"
         app:TopLeftArc="outer"
@@ -90,6 +91,7 @@ There are all different kind of shapes that you can build.
     <com.stelladk.arclib.ArcLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:background="@drawable/pattern"
 
         app:BottomLeftArc="outer"
         app:BottomRightArc="inner"
@@ -103,6 +105,7 @@ There are all different kind of shapes that you can build.
     <com.stelladk.arclib.ArcLayout
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:background="@drawable/pattern"
 
         app:ArcType="inner"
         app:ArcRadius="150dp"/>
