@@ -1,4 +1,6 @@
 # ArcLibrary
+[![](https://jitpack.io/v/stelladk/ArcLibrary.svg)](https://jitpack.io/#stelladk/ArcLibrary)
+
 An android library for Layouts with rounded corners
 
 <p align="center">
@@ -7,7 +9,22 @@ An android library for Layouts with rounded corners
 
 
 ## Install
+[![](https://jitpack.io/v/stelladk/ArcLibrary.svg)](https://jitpack.io/#stelladk/ArcLibrary)
 
+Add JitPack in your root build.gradle at the end of repositories:
+
+    allprojects {
+            repositories {
+                ...
+                maven { url 'https://jitpack.io' }
+            }
+        }
+        
+Add ArcLibrary dependency
+
+    dependencies {
+                implementation 'com.github.stelladk:ArcLibrary:0.1.0'
+        }
 
 
 ## How to use
