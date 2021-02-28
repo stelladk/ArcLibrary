@@ -11,7 +11,7 @@ An android library for Layouts with rounded corners
 ## Install
 [![](https://jitpack.io/v/stelladk/ArcLibrary.svg)](https://jitpack.io/#stelladk/ArcLibrary)
 
-Add JitPack in your root build.gradle at the end of repositories:
+Add JitPack in your root build.gradle at the end of repositories
 
     allprojects {
             repositories {
@@ -28,9 +28,9 @@ Add ArcLibrary dependency
 
 
 ## How to use
-In your layout declare a namespace for the library
+Make sure that you have the app namespace declared in your layout
 
-    xmlns:arclib="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
 Now you can use the ArcLayout 
 
@@ -38,27 +38,27 @@ Now you can use the ArcLayout
         android:id="@+id/arcLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        arclib:ArcType="none"/>
+        app:ArcType="none"/>
 
 
 Every corner can be customised separately.
 
 With the attribute **ArcType** you can specify the corner type you want. The default value is `"none"`.
 
-|`arclib:TopRightArc="inner"`|`arclib:TopRightArc="outer"`|
+|`app:TopRightArc="inner"`|`app:TopRightArc="outer"`|
 |---|---|
 |<img src="preview/inner_crop.jpg" alt="inner arc" width="250">|<img src="preview/outer_y_crop.jpg" alt="outer arc" width="250">|
 
 
 With the attribute **OuterAxis** you can specify the direction of the outer corners of your layout.
 
-|`arclib:TopRightOuterAxis="y_axis"`|`arclib:TopRightOuterAxis="x_axis"`|
+|`app:TopRightOuterAxis="y_axis"`|`app:TopRightOuterAxis="x_axis"`|
 |---|---|
 |<img src="preview/outer_y_crop.jpg" alt="Y axis" width="250">|<img src="preview/outer_x_crop.jpg" alt="X axis" width="250">|
 
 With the attribute **ArcRadius** you can specify the radius of your corners.
 
-`arclib:BottomRightRadius="150dp"`
+`app:BottomRightRadius="150dp"`
 
 <img src="preview/arc.gif" alt="Arc Radius" width="300">
 
@@ -75,11 +75,11 @@ There are all different kind of shapes that you can build.
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        arclib:ArcType="inner"
-        arclib:TopLeftArc="outer"
-        arclib:BottomRightArc="outer"
-        arclib:OuterAxis="y_axis"
-        arclib:ArcRadius="150dp"/>
+        app:ArcType="inner"
+        app:TopLeftArc="outer"
+        app:BottomRightArc="outer"
+        app:OuterAxis="y_axis"
+        app:ArcRadius="150dp"/>
 
 <p align="center">
 <img src="preview/wave.jpg" alt="Wave example" width="200">
@@ -91,9 +91,9 @@ There are all different kind of shapes that you can build.
         android:layout_width="match_parent"
         android:layout_height="300dp"
 
-        arclib:BottomLeftArc="outer"
-        arclib:BottomRightArc="inner"
-        arclib:ArcRadius="150dp"/>
+        app:BottomLeftArc="outer"
+        app:BottomRightArc="inner"
+        app:ArcRadius="150dp"/>
 
 <p align="center">
 <img src="preview/header.jpg" alt="Header example" width="200"></p>
@@ -104,8 +104,8 @@ There are all different kind of shapes that you can build.
         android:layout_width="300dp"
         android:layout_height="300dp"
 
-        arclib:ArcType="inner"
-        arclib:ArcRadius="150dp"/>
+        app:ArcType="inner"
+        app:ArcRadius="150dp"/>
 <p align="center">
 <img src="preview/circle.jpg" alt="Circle example" width="200">
 </p>
@@ -117,11 +117,11 @@ There are all different kind of shapes that you can build.
         android:layout_width="300dp"
         android:layout_height="300dp"
 
-        arclib:ArcType="inner"
-        arclib:OuterAxis="y_axis"
-        arclib:ArcRadius="70dp"
-        arclib:BottomRightArc="outer"
-        arclib:BottomRightRadius="100dp"
+        app:ArcType="inner"
+        app:OuterAxis="y_axis"
+        app:ArcRadius="70dp"
+        app:BottomRightArc="outer"
+        app:BottomRightRadius="100dp"
         android:background="@drawable/pink"/>
 
     <com.stelladk.arclib.ArcLayout
@@ -129,10 +129,10 @@ There are all different kind of shapes that you can build.
         android:layout_width="300dp"
         android:layout_height="300dp"
 
-        arclib:ArcType="inner"
-        arclib:ArcRadius="100dp"
-        arclib:BottomLeftArc="outer"
-        arclib:BottomLeftRadius="90dp"/>
+        app:ArcType="inner"
+        app:ArcRadius="100dp"
+        app:BottomLeftArc="outer"
+        app:BottomLeftRadius="90dp"/>
 
 <p align="center">
 <img src="preview/speech_bubbles.jpg" alt="Speech bubbles" width="200"></p>
