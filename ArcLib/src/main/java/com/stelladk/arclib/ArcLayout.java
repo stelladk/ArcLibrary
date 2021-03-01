@@ -52,6 +52,10 @@ public class ArcLayout extends FrameLayout {
     private int outerAxis, topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
     private float arcRadius, topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius;
 
+    private boolean stroke;
+    private int strokeColor;
+    private float strokeWidth;
+
     public ArcLayout(@NonNull Context context) {
         super(context);
         init(context,null, 0);
@@ -89,6 +93,10 @@ public class ArcLayout extends FrameLayout {
             this.topRightRadius = a.getDimension(R.styleable.ArcLayout_TopRightRadius, arcRadius);
             this.bottomLeftRadius = a.getDimension(R.styleable.ArcLayout_BottomLeftRadius, arcRadius);
             this.bottomRightRadius = a.getDimension(R.styleable.ArcLayout_BottomRightRadius, arcRadius);
+
+            this.stroke = a.getBoolean(R.styleable.ArcLayout_Stroke, false);
+            this.strokeColor = a.getColor(R.styleable.ArcLayout_StrokeColor, Color.WHITE);
+            this.strokeWidth = a.getDimension(R.styleable.ArcLayout_StrokeWidth, 10);
         }finally {
             a.recycle();
         }
@@ -210,6 +218,30 @@ public class ArcLayout extends FrameLayout {
     }
 
     /**
+     * Add stroke to layout
+     * @param stroke if true add stroke
+     */
+    public void setStroke(boolean stroke){
+        this.stroke = stroke;
+    }
+
+    /**
+     * Set stroke color
+     * @param color stroke color
+     */
+    public void setStrokeColor(int color){
+        this.strokeColor = color;
+    }
+
+    /**
+     * Set stroke width
+     * @param width stroke width
+     */
+    public void setStrokeWidth(float width){
+        this.strokeWidth = width;
+    }
+
+    /**
      * Redraw the ArcLayout
      * Used to change the arcs in runtime
      */
@@ -250,6 +282,19 @@ public class ArcLayout extends FrameLayout {
 
         offscreenCanvas.drawBitmap(maskBitmap, 0f, 0f, maskPaint);
         canvas.drawBitmap(offscreenBitmap, 0f, 0f, paint);
+
+        //Stroke
+        if(stroke){
+            paint.setXfermode(null);
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(strokeWidth);
+            paint.setColor(strokeColor);
+            ArcShape shape = new ArcShape(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
+                    topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis,
+                    topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius);
+            shape.draw(canvas, paint);
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -259,7 +304,7 @@ public class ArcLayout extends FrameLayout {
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setAntiAlias(true);
-//        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setXfermode(null);
         paint.setColor(Color.WHITE);
 

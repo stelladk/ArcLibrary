@@ -67,5 +67,12 @@
         <attr name="BottomLeftRadius" format="dimension"/>
         <!--Bottom Right Corner Radius-->
         <attr name="BottomRightRadius" format="dimension"/>
+
+        <!--Add stroke to layout-->
+        <attr name="Stroke" format="boolean"/>
+        <!--Stroke Color-->
+        <attr name="StrokeColor" format="color"/>
+        <!--Stroke Width-->
+        <attr name="StrokeWidth" format="dimension"/>
     </declare-styleable>
 </resources>
