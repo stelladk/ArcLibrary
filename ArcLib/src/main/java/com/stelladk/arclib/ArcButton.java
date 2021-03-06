@@ -17,6 +17,11 @@ import android.util.TypedValue;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 
+/**
+ * Button with customisable arc corners
+ *
+ * @see ArcShape
+ */
 public class ArcButton extends androidx.appcompat.widget.AppCompatButton {
     private final static String TAG = "ArcButton";
 
