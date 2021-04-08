@@ -46,6 +46,7 @@ public class ArcLayout extends FrameLayout {
     private int layoutWidth, layoutHeight;
 
     private Bitmap maskBitmap;
+    private ArcShape shape;
     private Paint paint, maskPaint;
 
     private int arcType, topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
@@ -55,6 +56,11 @@ public class ArcLayout extends FrameLayout {
     private boolean stroke;
     private int strokeColor;
     private float strokeWidth;
+
+    private boolean shadow;
+    private int shadowColor;
+    private final float shadowRadius = 20;
+    private float elevation, shadowDx = 0;
 
     public ArcLayout(@NonNull Context context) {
         super(context);
@@ -97,6 +103,10 @@ public class ArcLayout extends FrameLayout {
             this.stroke = a.getBoolean(R.styleable.ArcLayout_Stroke, false);
             this.strokeColor = a.getColor(R.styleable.ArcLayout_StrokeColor, Color.WHITE);
             this.strokeWidth = a.getDimension(R.styleable.ArcLayout_StrokeWidth, 10);
+
+            this.shadow = a.getBoolean(R.styleable.ArcLayout_Shadow, false);
+            this.shadowColor = a.getColor(R.styleable.ArcLayout_ShadowColor, Color.GRAY);
+            this.elevation = a.getDimension(R.styleable.ArcLayout_elevation, 0);
         }finally {
             a.recycle();
         }
@@ -107,6 +117,8 @@ public class ArcLayout extends FrameLayout {
         maskPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
         setWillNotDraw(false);
+
+        createShape();
     }
 
     /**
@@ -277,7 +289,15 @@ public class ArcLayout extends FrameLayout {
         super.draw(offscreenCanvas);
 
         if(maskBitmap == null){
+            createShape();
             maskBitmap = createMask(layoutWidth, layoutHeight);
+        }
+
+        if(shadow){
+            Paint shadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            shadowPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+            shadowPaint.setShadowLayer(shadowRadius, shadowDx, elevation, shadowColor);
+            shape.draw(canvas, shadowPaint);
         }
 
         offscreenCanvas.drawBitmap(maskBitmap, 0f, 0f, maskPaint);
@@ -289,9 +309,7 @@ public class ArcLayout extends FrameLayout {
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(strokeWidth);
             paint.setColor(strokeColor);
-            ArcShape shape = new ArcShape(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
-                    topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis,
-                    topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius);
+
             shape.draw(canvas, paint);
         }
 
@@ -312,12 +330,20 @@ public class ArcLayout extends FrameLayout {
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
-        ArcShape shape = new ArcShape(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
-                topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis,
-                topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius);
+//        createShape();
+//        ArcShape shape = new ArcShape(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
+//                topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis,
+//                topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius);
         shape.draw(canvas, paint);
 
         return mask;
+    }
+
+    private void createShape(){
+        shape = new ArcShape(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
+                topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis,
+                topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius,
+                shadowRadius, shadowDx, elevation);
     }
 
 }

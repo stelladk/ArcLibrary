@@ -74,6 +74,13 @@
         <attr name="StrokeColor" format="color"/>
         <!--Stroke Width-->
         <attr name="StrokeWidth" format="dimension"/>
+
+        <!--Add shadow to layout-->
+        <attr name="Shadow" format="boolean"/>
+        <!--Layout elevation-->
+        <attr name="elevation" format="dimension"/>
+        <!--Shadow Color-->
+        <attr name="ShadowColor" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="ArcButton">
