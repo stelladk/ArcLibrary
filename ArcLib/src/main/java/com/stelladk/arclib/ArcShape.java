@@ -41,10 +41,11 @@ public class ArcShape extends Shape {
     private int topLeftArc, topRightArc, bottomLeftArc, bottomRightArc;
     private int topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis;
     private float topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius;
+    private float shadowRadius, shadowDx, shadowDy;
 
-    private int left, top, right, bottom;
-    private int width, height;
-    private int xCenter, yCenter;
+    private float left, top, right, bottom;
+    private float width, height;
+    private float xCenter, yCenter;
     private float xRadius, yRadius;
     private float topLeftRadiusX, topRightRadiusX, bottomLeftRadiusX, bottomRightRadiusX;
     private float topLeftRadiusY, topRightRadiusY, bottomLeftRadiusY, bottomRightRadiusY;
@@ -61,6 +62,13 @@ public class ArcShape extends Shape {
     }
 
     public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc, int topLeftOuterAxis, int topRightOuterAxis, int bottomLeftOuterAxis, int bottomRightOuterAxis, float topLeftRadius, float topRightRadius, float bottomLeftRadius, float bottomRightRadius) {
+        this(topLeftArc, topRightArc, bottomLeftArc, bottomRightArc,
+                topLeftOuterAxis, topRightOuterAxis, bottomLeftOuterAxis, bottomRightOuterAxis,
+                topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius,
+                0, 0, 0);
+    }
+
+    public ArcShape(int topLeftArc, int topRightArc, int bottomLeftArc, int bottomRightArc, int topLeftOuterAxis, int topRightOuterAxis, int bottomLeftOuterAxis, int bottomRightOuterAxis, float topLeftRadius, float topRightRadius, float bottomLeftRadius, float bottomRightRadius, float shadowRadius, float shadowDx, float shadowDy) {
         this.topLeftArc = topLeftArc;
         this.topRightArc = topRightArc;
         this.bottomLeftArc = bottomLeftArc;
@@ -73,6 +81,9 @@ public class ArcShape extends Shape {
         this.topRightRadius = topRightRadius;
         this.bottomLeftRadius = bottomLeftRadius;
         this.bottomRightRadius = bottomRightRadius;
+        this.shadowRadius = shadowRadius;
+        this.shadowDx = shadowDx;
+        this.shadowDy = shadowDy;
     }
 
     /**
@@ -170,10 +181,15 @@ public class ArcShape extends Shape {
 //        right = viewWidth * 3/4;
 //        bottom = viewHeight * 3/4;
 
-        left = calcMargin(viewWidth, X_AXIS, topLeftArc, topLeftOuterAxis, topLeftRadius, bottomLeftArc, bottomLeftOuterAxis, bottomLeftRadius);
-        top = calcMargin(viewHeight, Y_AXIS, topLeftArc, topLeftOuterAxis, topLeftRadius, topRightArc, topRightOuterAxis, topRightRadius);
-        bottom = viewHeight - calcMargin(viewHeight, Y_AXIS, bottomLeftArc, bottomLeftOuterAxis, bottomLeftRadius, bottomRightArc, bottomRightOuterAxis, bottomRightRadius);
-        right = viewWidth - calcMargin(viewWidth, X_AXIS, topRightArc, topRightOuterAxis, topRightRadius, bottomRightArc, bottomRightOuterAxis, bottomRightRadius);
+        if(shadowRadius == 0){
+            shadowDx = 0;
+            shadowDy = 0;
+        }
+
+        left = calcShadow(-shadowDx) + calcMargin(viewWidth, X_AXIS, topLeftArc, topLeftOuterAxis, topLeftRadius, bottomLeftArc, bottomLeftOuterAxis, bottomLeftRadius);
+        top = calcShadow(-shadowDy) + calcMargin(viewHeight, Y_AXIS, topLeftArc, topLeftOuterAxis, topLeftRadius, topRightArc, topRightOuterAxis, topRightRadius);
+        bottom = viewHeight - calcShadow(shadowDy) - calcMargin(viewHeight, Y_AXIS, bottomLeftArc, bottomLeftOuterAxis, bottomLeftRadius, bottomRightArc, bottomRightOuterAxis, bottomRightRadius);
+        right = viewWidth - calcShadow(shadowDx) - calcMargin(viewWidth, X_AXIS, topRightArc, topRightOuterAxis, topRightRadius, bottomRightArc, bottomRightOuterAxis, bottomRightRadius);
 
         width = right - left;
         height = bottom - top;
@@ -219,6 +235,11 @@ public class ArcShape extends Shape {
             margin = arcRadius2 == -1? dim/4 : (int)arcRadius2;
         }
         return margin;
+    }
+
+    private float calcShadow(float translate){
+        if(translate < 0) return 0;
+        return shadowRadius + translate;
     }
 
 }
