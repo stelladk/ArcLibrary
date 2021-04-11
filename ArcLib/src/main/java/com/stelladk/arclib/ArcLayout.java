@@ -254,6 +254,30 @@ public class ArcLayout extends FrameLayout {
     }
 
     /**
+     * Add shadow to layout
+     * @param shadow if true add shadow
+     */
+    public void setShadow(boolean shadow){
+        this.shadow = shadow;
+    }
+
+    /**
+     * Add elevation to layout
+     * @param elevation shadow elevation
+     */
+    public void setElevation(float elevation){
+        this.elevation = elevation;
+    }
+
+    /**
+     * Set shadow color
+     * @param color shadow color
+     */
+    public void setShadowColor(int color){
+        this.shadowColor = color;
+    }
+
+    /**
      * Redraw the ArcLayout
      * Used to change the arcs in runtime
      */
